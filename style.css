@@ -1,0 +1,471 @@
+/* ==========================================================================
+   PALETA DE CORES E IDENTIDADE VISUAL - JF MULTIMARCAS (CORRIGIDO PARA LEITURA)
+   ========================================================================== */
+@import url('https://googleapis.com');
+
+:root {
+    --bg-dark: #0a0d14;         /* Preto profundo de fundo */
+    --panel-dark: #131924;      /* Fundo dos blocos de serviço (Mais claro para dar contraste) */
+    --accent-red: #e11d48;      /* Vermelho esportivo principal */
+    --accent-gold: #f59e0b;     /* Dourado dos números de telefone */
+    --white: #ffffff;
+    --text-light: #f1f5f9;      /* Texto super legível e claro */
+    --text-gray: #94a3b8;       /* Legendas secundárias */
+    --whatsapp-green: #25d366;
+    --transition: all 0.25s ease-in-out;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif; /* Fonte principal limpa para textos longos */
+    background-color: var(--bg-dark);
+    color: var(--text-light);
+    line-height: 1.6;
+}
+
+/* ==========================================================================
+   MENU SUPERIOR
+   ========================================================================== */
+.main-header {
+    background-color: #07090e;
+    border-bottom: 3px solid var(--accent-red);
+    padding: 18px 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.brand-logo {
+    font-family: 'Oswald', sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    font-style: italic;
+    letter-spacing: 0.5px;
+}
+
+.brand-logo span {
+    color: var(--accent-red);
+}
+
+.nav-menu {
+    display: flex;
+    list-style: none;
+    gap: 25px;
+}
+
+.nav-link {
+    color: var(--white);
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 14px;
+    text-transform: uppercase;
+    transition: var(--transition);
+}
+
+.nav-link:hover {
+    color: var(--accent-red);
+}
+
+/* ==========================================================================
+   BANNER PRINCIPAL (AJUSTADO PARA A FOTO NOVA DA FACHADA)
+   ========================================================================== */
+.hero-section {
+    text-align: center;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end; /* Empurra o título "CATÁLOGO" sempre para a base da foto */
+    
+    /* Puxando a foto nova da fachada. Salve como 'loja.png' */
+    background: linear-gradient(180deg, rgba(10,13,20,0.1) 0%, rgba(10,13,20,0.7) 60%, rgba(10,13,20,0.95) 100%),
+                url('faxada.jpg') no-repeat center top/cover;
+                
+    border-bottom: 3px solid var(--accent-red);
+    
+    /* No computador, a altura do banner vai ser bem grande */
+    min-height: 65vh; 
+    padding: 0 5% 40px 5%;
+}
+
+/* Sombra reforçada nas letras para dar leitura perfeita em cima dos carros */
+.hero-title {
+    font-family: 'Oswald', sans-serif;
+    font-size: 56px;
+    font-weight: 700;
+    font-style: italic;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    line-height: 1.1;
+    margin-bottom: 10px;
+    text-shadow: 3px 3px 8px rgba(0, 0, 0, 1), -1px -1px 0 rgba(0,0,0,0.5);
+}
+
+.hero-subtitle {
+    color: var(--white);
+    font-size: 16px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 1);
+}
+
+/* ==========================================================================
+   A JUSTE EXCLUSIVO PARA CELULAR (TELA EM PÉ)
+   ========================================================================== */
+@media (max-width: 768px) {
+    .hero-section {
+        /* No celular, mudamos para 'contain'. Isso faz com que a foto da sua 
+           loja apareça INTEIRA na tela, sem cortar nenhuma ponta do letreiro! */
+        background-size: contain;
+        /* Dá um espaço no topo proporcional para o título não subir na lona */
+        padding-top: 55vw; 
+        min-height: auto;
+        background-color: var(--bg-dark);
+    }
+    
+    .hero-title {
+        font-size: 32px; /* Diminui a letra no celular para não embolar */
+        margin-top: 20px;
+    }
+    
+    .hero-subtitle {
+        font-size: 13px;
+    }
+}
+
+
+/* ==========================================================================
+   GRID DE SERVIÇOS (ESTILO REPRODUZIDO DO PANFLETO)
+   ========================================================================== */
+.catalog-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 30px;
+    padding: 40px 5% 80px 5%;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.catalog-card {
+    background-color: var(--panel-dark);
+    border: 1px solid #1e293b;
+    border-top: 5px solid var(--accent-red);
+    border-radius: 6px;
+    padding: 30px 25px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.45);
+}
+
+/* Número indicador no canto superior direito */
+.card-number {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-family: 'Oswald', sans-serif;
+    font-size: 20px;
+    color: var(--accent-red);
+    font-weight: 700;
+    border-bottom: 2px solid var(--accent-red);
+}
+
+.card-title {
+    font-family: 'Oswald', sans-serif;
+    font-size: 30px;
+    font-weight: 700;
+    font-style: italic;
+    text-transform: uppercase;
+    color: var(--white);
+    letter-spacing: 0.5px;
+}
+
+.card-title-red {
+    font-family: 'Oswald', sans-serif;
+    color: var(--accent-red);
+    font-size: 26px;
+    font-weight: 700;
+    font-style: italic;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    letter-spacing: 0.5px;
+}
+
+.card-tagline {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--text-gray);
+    text-transform: uppercase;
+    margin-bottom: 25px;
+    letter-spacing: 0.5px;
+    line-height: 1.4;
+}
+
+/* Linhas de Preço internas do encarte */
+.price-list {
+    list-style: none;
+    margin-bottom: 25px;
+    flex-grow: 1;
+}
+
+.price-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(255,255,255,0.04);
+    border-left: 4px solid var(--accent-red);
+    padding: 12px 14px;
+    margin-bottom: 10px;
+    font-size: 15px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    border-radius: 0 4px 4px 0;
+}
+
+.price-value {
+    color: var(--white);
+    background: var(--accent-red);
+    padding: 5px 12px;
+    font-family: 'Oswald', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    font-style: italic;
+    border-radius: 3px;
+    min-width: 95px;
+    text-align: center;
+}
+
+.price-consult {
+    color: var(--white);
+    background:var(--accent-red);;
+    padding: 5px 12px;
+    font-family: 'Oswald', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    border-radius: 3px;
+    text-align: center;
+}
+
+/* Seção de diferenciais em formato lista de checks */
+.check-list {
+    list-style: none;
+    font-size: 13px;
+    margin-bottom: 25px;
+}
+.check-item {
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    display: flex;
+    align-items: center;
+}
+.check-item::before {
+    content: "✓";
+    color: var(--accent-red);
+    font-weight: 900;
+    font-size: 13px;
+    margin-right: 10px;
+}
+
+/* Informações de contato exclusivas de cada Card */
+.card-phone {
+    font-family: 'Oswald', sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--accent-gold);
+    text-align: center;
+    margin-top: auto;
+    text-decoration: none;
+    letter-spacing: 1px;
+    transition: var(--transition);
+}
+
+.card-phone:hover {
+    color: var(--white);
+}
+
+.card-address {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--accent-red);
+    text-align: center;
+    text-transform: uppercase;
+    margin-top: 8px;
+    letter-spacing: 0.5px;
+}
+
+/* ==========================================================================
+   BOTÕES E ELEMENTOS FLUTUANTES
+   ========================================================================== */
+.whatsapp-btn {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    background-color: var(--whatsapp-green);
+    color: var(--white);
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+    text-decoration: none;
+    z-index: 9999;
+    transition: var(--transition);
+}
+.whatsapp-btn:hover { 
+    transform: scale(1.1); 
+}
+
+@media (max-width: 768px) {
+    .hero-title { font-size: 38px; }
+    .main-header { flex-direction: column; gap: 12px; }
+    .catalog-grid { padding: 20px 4%; }
+}
+/* ==========================================================================
+   ESTILIZAÇÃO DOS NOVOS BOTÕES (INSTAGRAM E WHATSAPP)
+   ========================================================================== */
+.btn-nav-instagram {
+    background-color: var(--accent-red);
+    padding: 6px 14px;
+    border-radius: 4px;
+    transition: var(--transition);
+}
+.btn-nav-instagram:hover {
+    background-color: var(--white) !important;
+    color: var(--primary-dark) !important;
+}
+
+/* Grupo de botões no Banner */
+.hero-btn-group {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-top: 25px;
+    flex-wrap: wrap;
+    position: relative;
+    z-index: 10;
+}
+
+.hero-btn {
+    padding: 14px 28px;
+    font-family: 'Oswald', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: var(--transition);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-hero-whatsapp {
+    background-color: var(--whatsapp-green);
+    color: var(--white);
+}
+.btn-hero-whatsapp:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+}
+
+.btn-hero-instagram {
+    background-color: transparent;
+    color: var(--white);
+    border: 2px solid var(--white);
+}
+.btn-hero-instagram:hover {
+    background-color: var(--white);
+    color: var(--bg-dark);
+    transform: translateY(-3px);
+}
+
+@media (max-width: 768px) {
+    .hero-btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
+/* ==========================================================================
+   ESTILIZAÇÃO DO BLOCO DO QR CODE (BLOCO 08)
+   ========================================================================== */
+.card-qrcode-special {
+    background-color: var(--panel-dark) !important;
+    background-image: none !important; /* Remove a foto genérica antiga */
+}
+
+.qr-layout-flex {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.qr-text-side {
+    flex: 1;
+}
+
+.qr-image-side {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #ffffff;
+    padding: 12px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    max-width: 160px;
+    margin: 0 auto;
+}
+
+.qr-code-img {
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+}
+
+.qr-code-hint {
+    font-size: 10px;
+    color: #000000;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-top: 5px;
+    letter-spacing: 0.5px;
+    font-family: system-ui, sans-serif;
+}
+
+/* Ajuste para telas menores (celular) */
+@media (max-width: 480px) {
+    .qr-layout-flex {
+        flex-direction: column;
+        text-align: center;
+    }
+    .qr-image-side {
+        margin-top: 20px;
+        max-width: 140px;
+    }
+}
+/* Clareia bastante a camada escura, deixando a foto de fundo bem visível */
+.card-insufilm .card-overlay {
+    background: linear-gradient(180deg, rgba(10, 13, 20, 0.4) 0%, rgba(7, 9, 14, 0.6) 100%) !important;
+}
