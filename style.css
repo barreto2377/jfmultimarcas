@@ -564,10 +564,12 @@ body {
    ========================================================================== */
 .header-buttons-container {
     display: flex;
+    flex-wrap: wrap; /* Permite que os botões se ajustem melhor em telas pequenas */
     gap: 10px;
     width: 100%;
     justify-content: center;
 }
+
 
 /* Base comum para simetria perfeita dos botões */
 .btn-header {
