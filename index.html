@@ -222,7 +222,89 @@
         <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397 0 11.948 0c3.174.001 6.161 1.24 8.401 3.487 2.24 2.246 3.473 5.238 3.472 8.414-.003 6.596-5.341 11.945-11.892 11.945-1.996-.001-3.959-.5-5.698-1.448L0 24zm6.59-4.846c1.657.983 3.283 1.517 4.931 1.518 5.437.001 9.861-4.382 9.864-9.768.001-2.61-1.013-5.064-2.856-6.91C16.693 2.147 14.241 1.13 11.66 1.13c-5.442 0-9.866 4.382-9.869 9.769-.001 2.044.54 4.02 1.564 5.753l-.973 3.552 3.665-.95zM16.5 13.91c-.266-.134-1.576-.773-1.821-.862-.244-.09-.422-.134-.599.134-.177.266-.688.862-.843 1.04-.155.178-.31.2-.577.067-.266-.134-1.127-.415-2.147-1.321-.79-.705-1.323-1.577-1.479-1.844-.155-.266-.016-.41.117-.542.121-.12.266-.31.4-.466.133-.156.178-.267.266-.445.089-.178.045-.334-.022-.467-.067-.133-.599-1.443-.821-1.976-.216-.52-.453-.448-.621-.448-.16-.001-.344-.001-.528-.001-.184 0-.485.07-.738.334-.254.266-.968.947-.968 2.31 0 1.361.996 2.677 1.136 2.863.14.186 1.961 2.97 4.75 4.167.664.285 1.181.455 1.585.583.667.213 1.274.183 1.755.11.536-.08 1.576-.644 1.798-1.235.221-.59.221-1.098.155-1.205-.066-.107-.244-.173-.51-.307z"/>
     </svg>
 </a>
+    
+        <!-- SEÇÃO DE ANÚNCIO DOS CARROS COM LAYOUT VITRINE JF -->
+    <section id="estoque" style="padding: 60px 20px; background-color: #0b0f19; width: 100%; display: block; clear: both; box-sizing: border-box; font-family: system-ui, -apple-system, sans-serif;">
+        <h2 class="hero-title" style="text-align: center; margin-bottom: 5px; display: block; width: 100%;">VEÍCULOS <span>À VENDA</span></h2>
+        <p class="hero-subtitle" style="text-align: center; margin-bottom: 40px; display: block; width: 100%; color: #a0aec0;">Carros novos e usados, confira os veículos mais recentes cadastrados em nosso estoque.</p>
+        
+        <div id="container-estoque" style="display: flex; flex-wrap: wrap; gap: 25px; max-width: 1200px; margin: 0 auto; width: 100%; justify-content: center;">
+            <!-- Os cards da planilha vão brotar aqui de forma organizada -->
+        </div>
+    </section>
 
+    <!-- SCRIPT DE INTEGRAÇÃO OFICIAL -->
+    <script>
+        const ID_PLANILHA = '1j1U-IH9ct1hLRe7Fk__IZb0gfmw8_FhybvZV_FcXtck'; 
+        const URL = `https://google.com{ID_PLANILHA}/gviz/tq?tqx=out:json`;
 
-</body>
-</html>
+        fetch(URL)
+            .then(res => res.text())
+            .then(data => {
+                const jsonText = data.match(/google\.visualization\.Query\.setResponse\(([\s\S\s]*)\);/);
+                const json = JSON.parse(jsonText[1]);
+                const linhas = json.table.rows;
+                const container = document.getElementById('container-estoque');
+                container.innerHTML = '';
+
+                linhas.forEach((linha) => {
+                    if (!linha || !linha.c || !linha.c[0]) return; // Ignora linhas vazias ou o cabeçalho
+
+                    // Função auxiliar para evitar erros de leitura
+                    const lerColuna = (num) => (linha.c[num] && linha.c[num].v !== null) ? String(linha.c[num].v) : '';
+
+                    // Mapeamento exato das colunas da sua planilha (Marca, Modelo, Ano, KM, Preço, Condições, Imagem, Link)
+                    const marca = lerColuna(0);
+                    const modelo = lerColuna(1);
+                    const ano = lerColuna(2);
+                    const km = lerColuna(3);
+                    const preco = lerColuna(4) || 'Consultar';
+                    const condicoes = lerColuna(5);
+                    const nomeFoto = lerColuna(6);
+                    const link_drive = lerColuna(7) || '#';
+                    
+                    const imagem = nomeFoto ? `https://github.io{nomeFoto}` : 'https://unsplash.com';
+
+                    const cardHTML = `
+                        <div style="background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.15); display: flex; flex-direction: column; position: relative; border: 1px solid #e2e8f0; text-align: left; width: 300px; box-sizing: border-box;">
+                            
+                            <!-- Faixa de Destaque Vermelha JF -->
+                            <div style="position: absolute; top: 15px; left: -30px; background-color: #ff0043; color: #ffffff; font-size: 11px; font-weight: bold; padding: 4px 35px; transform: rotate(-45deg); z-index: 2; box-shadow: 0 2px 5px rgba(0,0,0,0.2); letter-spacing: 1px;">
+                                DESTAQUE
+                            </div>
+
+                            <!-- Imagem do Carro -->
+                            <div style="width: 100%; height: 200px; background-image: url('${imagem}'); background-size: cover; background-position: center; border-bottom: 1px solid #edf2f7; cursor: pointer;" onclick="window.open('${link_drive}', '_blank')"></div>
+                            
+                            <!-- Detalhes do Veículo -->
+                            <div style="padding: 15px; display: flex; flex-direction: column; flex: 1; box-sizing: border-box;">
+                                <h3 style="margin: 0; font-size: 16px; color: #1a202c; font-weight: 700; text-transform: uppercase; font-family: sans-serif;">
+                                    ${marca} <span style="color: #4a5568; font-weight: 400; text-transform: uppercase;">${modelo}</span>
+                                </h3>
+                                
+                                <div style="margin: 10px 0; font-size: 20px; font-weight: bold; color: #ff0043; font-family: sans-serif;">
+                                    ${preco.toUpperCase() === 'CONSULTAR' ? 'Consulte o Valor' : preco}
+                                </div>
+
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 15px; font-size: 13px; color: #4a5568; border-top: 1px solid #edf2f7; padding-top: 10px; font-family: sans-serif;">
+                                    <div>⏱️ ${km} KM</div>
+                                    <div>📅 Ano: ${ano}</div>
+                                    <div style="grid-column: span 2; color: #718096; font-size: 12px; line-height: 1.4; min-height: 34px;">📋 ${condicoes}</div>
+                                </div>
+
+                                <div style="display: flex; flex-direction: column; gap: 8px; margin-top: auto; width: 100%;">
+                                    <a href="whatsapp://send?phone=5515981188659&text=Olá!%20Tenho%20interesse%20na%20${encodeURIComponent(marca)}%20${encodeURIComponent(modelo)}%20${ano}%20visto%20no%20site." target="_blank" style="display: flex; align-items: center; justify-content: center; gap: 8px; background-color: #25d366; color: #ffffff; text-decoration: none; font-weight: bold; padding: 12px; border-radius: 6px; text-align: center; font-size: 15px; font-family: sans-serif;">
+                                        Whatsapp 🟢
+                                    </a>
+                                    <a href="${link_drive}" target="_blank" style="display: block; text-decoration: none; background-color: #1a202c; color: #ffffff; text-align: center; padding: 8px; border-radius: 6px; font-size: 12px; font-weight: 600; letter-spacing: 0.5px; font-family: sans-serif;">
+                                        📷 VER TODAS AS FOTOS
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    container.innerHTML += cardHTML;
+                });
+            })
+            .catch(err => console.error('Erro ao ler a planilha:', err));
+    </script>
