@@ -200,8 +200,7 @@
         </div>
     </section>
 
-    <!-- INTEGRALIZAÇÃO SEM ERROS VIA SCRIPT (JSONP) -->
-        <!-- INTEGRALIZAÇÃO CORRIGIDA - FOTOS DO GITHUB E LINK DO DRIVE NO CARD -->
+       <!-- INTEGRALIZAÇÃO BLINDADA VIA FETCH API - SOLUÇÃO DEFINITIVA -->
     <script>
         window.retornoPlanilhaJF = function(dados) {
             try {
@@ -211,7 +210,7 @@
                 const linhas = dados.table.rows;
                 
                 if (linhas && linhas.length > 1) { 
-                    container.innerHTML = ''; // Limpa o card de carregamento
+                    container.innerHTML = ''; // Limpa o card de carregamento fixo
                 }
 
                 linhas.forEach((linha, index) => {
@@ -236,11 +235,10 @@
 
                     if (!marca && !modelo) return;
 
-                    // CORREÇÃO 1: Caminho real da raiz do seu repositório no GitHub Pages
+                    // Ajuste preciso do link de capa: Puxa direto da raiz do seu repositório
                     const nomeFotoLimpo = nomeFoto.toLowerCase().trim();
                     const img = nomeFoto ? `https://github.io{nomeFotoLimpo}` : 'https://unsplash.com';
                     
-                    // CORREÇÃO 2: Garante que o link do Google Drive seja válido
                     const linkDriveValido = (link_drive && link_drive !== '#' && link_drive !== '') ? link_drive : 'javascript:void(0);';
                     const targetDrive = (link_drive && link_drive !== '#' && link_drive !== '') ? 'target="_blank"' : '';
 
@@ -250,7 +248,7 @@
                         <div style="background-color: #ffffff; border-radius: 6px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.12); display: flex; flex-direction: column; position: relative; border: 1px solid #e2e8f0; text-align: left; width: 320px; box-sizing: border-box; font-family: system-ui, sans-serif; margin-bottom: 5px;">
                             <div style="position: absolute; top: 12px; left: -32px; background-color: #ff0043; color: #ffffff; font-size: 10px; font-weight: bold; padding: 5px 35px; transform: rotate(-45deg); z-index: 2; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">DESTAQUE</div>
                             
-                            <!-- O clique na imagem agora abre as fotos do Google Drive em uma nova aba -->
+                            <!-- Clique seguro na imagem abre a pasta do Drive -->
                             <a href="${linkDriveValido}" ${targetDrive} style="display: block; width: 100%; height: 210px; text-decoration: none;">
                                 <div style="width: 100%; height: 100%; background-image: url('${img}'); background-size: cover; background-position: center; background-color: #e2e8f0; cursor: pointer;"></div>
                             </a>
@@ -274,11 +272,18 @@
             }
         };
 
-        const endpointJSONP = document.createElement('script');
-        endpointJSONP.src = "https://google.com";
-        document.body.appendChild(endpointJSONP);
-
+        // REQUISIÇÃO MODERNA: Puxa o JSON de forma isolada, contornando travas de segurança do Google
+        const idPlanilha = "1j1U-IH9ct1hLRe7Fk__IZb0gfmw8_FhybvZV_FcXtck";
+        fetch(`https://google.com{idPlanilha}/gviz/tq?sheet=estoque&tqx=out:json`)
+            .then(res => res.text())
+            .then(texto => {
+                // Filtra o lixo de segurança padrão do Google para isolar os dados limpos
+                const inicio = texto.indexOf('{');
+                const fim = texto.lastIndexOf('}') + 1;
+                const jsonPuro = JSON.parse(texto.substring(inicio, fim));
+                window.retornoPlanilhaJF(jsonPuro);
+            })
+            .catch(erro => console.error("Falha na conexão de dados do estoque:", erro));
     </script>
-
 </body>
 </html>
