@@ -1,12 +1,12 @@
 /* ==========================================================================
-   PALETA DE CORES E IDENTIDADE VISUAL - JF MULTIMARCAS (CORRIGIDO PARA LEITURA)
+   PALETA DE CORES E IDENTIDADE VISUAL - JF MULTIMARCAS
    ========================================================================== */
 @import url('https://googleapis.com');
 
 :root {
     --bg-dark: #0a0d14;         /* Preto profundo de fundo */
-    --panel-dark: #131924;      /* Fundo dos blocos de serviço (Mais claro para dar contraste) */
-    --accent-red: #e11d48;      /* Vermelho esportivo principal */
+    --panel-dark: #131924;      /* Fundo dos blocos de serviço */
+    --accent-red: #ff0043;      /* Vermelho esportivo principal */
     --accent-gold: #f59e0b;     /* Dourado dos números de telefone */
     --white: #ffffff;
     --text-light: #f1f5f9;      /* Texto super legível e claro */
@@ -33,18 +33,20 @@ body {
 }
 
 /* ==========================================================================
-   MENU SUPERIOR
+   MENU SUPERIOR E BOTÕES 100% SIMÉTRICOS
    ========================================================================== */
 .main-header {
     background-color: #07090e;
     border-bottom: 3px solid var(--accent-red);
     padding: 18px 5%;
     display: flex;
+    flex-direction: column; /* Padrão mobile inicial */
     justify-content: space-between;
     align-items: center;
     position: sticky;
     top: 0;
     z-index: 1000;
+    gap: 12px;
 }
 
 .brand-logo {
@@ -53,53 +55,84 @@ body {
     font-weight: 700;
     font-style: italic;
     letter-spacing: 0.5px;
+    color: var(--white);
 }
 
 .brand-logo span {
     color: var(--accent-red);
 }
 
-.nav-menu {
+.header-buttons-container {
     display: flex;
-    list-style: none;
-    gap: 25px;
+    flex-wrap: wrap; /* Permite que os botões se ajustem melhor em telas pequenas */
+    gap: 10px;
+    width: 100%;
+    justify-content: center;
 }
 
-.nav-link {
-    color: var(--white);
-    text-decoration: none;
+/* Base comum para simetria perfeita dos botões */
+.btn-header {
+    flex: 1;
+    max-width: 160px;
+    height: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    border-radius: 4px;
+    font-family: 'Oswald', sans-serif;
+    font-size: 12px;
     font-weight: 700;
-    font-size: 14px;
+    text-decoration: none;
     text-transform: uppercase;
+    text-align: center;
     transition: var(--transition);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
 
-.nav-link:hover {
-    color: var(--accent-red);
+/* Botão Serviços: Vermelho esportivo com escrita em preto */
+.btn-header.btn-servicos {
+    background-color: var(--accent-red);
+    color: #000000;
+}
+.btn-header.btn-servicos:hover {
+    background-color: #be123c; 
+}
+
+/* Botão Instagram: Fundo original do Instagram, escrita e ícone brancos */
+.btn-header.btn-instagram {
+    background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+    color: #ffffff;
+}
+.btn-header.btn-instagram:hover {
+    opacity: 0.9;
+}
+
+/* Botão Falar com Junior: Fundo verde WhatsApp com letras brancas */
+.btn-header.btn-junior {
+    background-color: var(--whatsapp-green);
+    color: #ffffff;
+}
+.btn-header.btn-junior:hover {
+    background-color: #1e7e34;
 }
 
 /* ==========================================================================
-   BANNER PRINCIPAL (AJUSTADO PARA A FOTO NOVA DA FACHADA)
+   BANNER PRINCIPAL (AJUSTADO PARA A FOTO DA FACHADA)
    ========================================================================== */
 .hero-section {
     text-align: center;
     position: relative;
     display: flex;
     flex-direction: column;
-    justify-content: flex-end; /* Empurra o título "CATÁLOGO" sempre para a base da foto */
-    
-    /* Puxando a foto nova da fachada. Salve como 'loja.png' */
+    justify-content: flex-end; 
     background: linear-gradient(180deg, rgba(10,13,20,0.1) 0%, rgba(10,13,20,0.7) 60%, rgba(10,13,20,0.95) 100%),
                 url('faxada.jpg') no-repeat center top/cover;
-                
     border-bottom: 3px solid var(--accent-red);
-    
-    /* No computador, a altura do banner vai ser bem grande */
     min-height: 65vh; 
     padding: 0 5% 40px 5%;
 }
 
-/* Sombra reforçada nas letras para dar leitura perfeita em cima dos carros */
 .hero-title {
     font-family: 'Oswald', sans-serif;
     font-size: 56px;
@@ -112,6 +145,10 @@ body {
     text-shadow: 3px 3px 8px rgba(0, 0, 0, 1), -1px -1px 0 rgba(0,0,0,0.5);
 }
 
+.hero-title span {
+    color: var(--accent-red);
+}
+
 .hero-subtitle {
     color: var(--white);
     font-size: 16px;
@@ -121,45 +158,68 @@ body {
     text-shadow: 2px 2px 5px rgba(0, 0, 0, 1);
 }
 
-/* ==========================================================================
-   A JUSTE EXCLUSIVO PARA CELULAR (TELA EM PÉ)
-   ========================================================================== */
-@media (max-width: 768px) {
-    .hero-section {
-        /* No celular, mudamos para 'contain'. Isso faz com que a foto da sua 
-           loja apareça INTEIRA na tela, sem cortar nenhuma ponta do letreiro! */
-        background-size: contain;
-        /* Dá um espaço no topo proporcional para o título não subir na lona */
-        padding-top: 55vw; 
-        min-height: auto;
-        background-color: var(--bg-dark);
-    }
-    
-    .hero-title {
-        font-size: 32px; /* Diminui a letra no celular para não embolar */
-        margin-top: 20px;
-    }
-    
-    .hero-subtitle {
-        font-size: 13px;
-    }
+/* Grupo de botões no Banner */
+.hero-btn-group {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-top: 25px;
+    flex-wrap: wrap;
+    position: relative;
+    z-index: 10;
 }
 
+.hero-btn {
+    padding: 14px 28px;
+    font-family: 'Oswald', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: var(--transition);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-hero-whatsapp {
+    background-color: var(--whatsapp-green);
+    color: var(--white);
+}
+.btn-hero-whatsapp:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+}
+
+.btn-hero-instagram {
+    background-color: transparent;
+    color: var(--white);
+    border: 2px solid var(--white);
+}
+.btn-hero-instagram:hover {
+    background-color: var(--white);
+    color: var(--bg-dark);
+    transform: translateY(-3px);
+}
 
 /* ==========================================================================
-   GRID DE SERVIÇOS (ESTILO REPRODUZIDO DO PANFLETO)
+   GRID DE SERVIÇOS (ESTILO PANFLETO)
    ========================================================================== */
 .catalog-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     gap: 30px;
-    padding: 40px 5% 80px 5%;
-    max-width: 1400px;
-    margin: 0 auto;
+    max-width: 1200px;
+    margin: 50px auto;
+    padding: 0 20px;
 }
 
 .catalog-card {
     background-color: var(--panel-dark);
+    background-size: cover;
+    background-position: center;
     border: 1px solid #1e293b;
     border-top: 5px solid var(--accent-red);
     border-radius: 6px;
@@ -167,10 +227,47 @@ body {
     position: relative;
     display: flex;
     flex-direction: column;
+    justify-content: space-between; 
+    min-height: 450px;              
     box-shadow: 0 10px 25px rgba(0,0,0,0.45);
+    z-index: 1;
+    overflow: hidden;
 }
 
-/* Número indicador no canto superior direito */
+.card-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg, rgba(19, 25, 36, 0.85) 0%, rgba(10, 13, 20, 0.98) 100%);
+    z-index: -1;
+}
+
+/* Clareia bastante a camada escura, deixando a foto de fundo bem visível */
+.card-insufilm .card-overlay {
+    background: linear-gradient(180deg, rgba(10, 13, 20, 0.4) 0%, rgba(7, 9, 14, 0.6) 100%) !important;
+}
+
+/* Estilização do Bloco do QR Code (Bloco 08 adaptado apenas para texto) */
+.card-qrcode-special {
+    background-color: var(--panel-dark) !important;
+    background-image: none !important; 
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+    min-height: 340px;
+    box-sizing: border-box;
+}
+
+.card-content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    flex: 1;
+}
+
 .card-number {
     position: absolute;
     top: 15px;
@@ -180,6 +277,7 @@ body {
     color: var(--accent-red);
     font-weight: 700;
     border-bottom: 2px solid var(--accent-red);
+    z-index: 2;
 }
 
 .card-title {
@@ -250,7 +348,7 @@ body {
 
 .price-consult {
     color: var(--white);
-    background:var(--accent-red);;
+    background: var(--accent-red);
     padding: 5px 12px;
     font-family: 'Oswald', sans-serif;
     font-size: 14px;
@@ -266,6 +364,7 @@ body {
     font-size: 13px;
     margin-bottom: 25px;
 }
+
 .check-item {
     margin-bottom: 12px;
     text-transform: uppercase;
@@ -274,6 +373,7 @@ body {
     display: flex;
     align-items: center;
 }
+
 .check-item::before {
     content: "✓";
     color: var(--accent-red);
@@ -289,7 +389,7 @@ body {
     font-weight: 700;
     color: var(--accent-gold);
     text-align: center;
-    margin-top: auto;
+    margin-top: auto; 
     text-decoration: none;
     letter-spacing: 1px;
     transition: var(--transition);
@@ -298,174 +398,4 @@ body {
 .card-phone:hover {
     color: var(--white);
 }
-
-.card-address {
-    font-size: 12px;
-    font-weight: 600;
-    color: var(--accent-red);
-    text-align: center;
-    text-transform: uppercase;
-    margin-top: 8px;
-    letter-spacing: 0.5px;
-}
-
-/* ==========================================================================
-   BOTÕES E ELEMENTOS FLUTUANTES
-   ========================================================================== */
-.whatsapp-btn {
-    position: fixed;
-    bottom: 25px;
-    right: 25px;
-    background-color: var(--whatsapp-green);
-    color: var(--white);
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 28px;
-    box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
-    text-decoration: none;
-    z-index: 9999;
-    transition: var(--transition);
-}
-.whatsapp-btn:hover { 
-    transform: scale(1.1); 
-}
-
-@media (max-width: 768px) {
-    .hero-title { font-size: 38px; }
-    .main-header { flex-direction: column; gap: 12px; }
-    .catalog-grid { padding: 20px 4%; }
-}
-/* ==========================================================================
-   ESTILIZAÇÃO DOS NOVOS BOTÕES (INSTAGRAM E WHATSAPP)
-   ========================================================================== */
-.btn-nav-instagram {
-    background-color: var(--accent-red);
-    padding: 6px 14px;
-    border-radius: 4px;
-    transition: var(--transition);
-}
-.btn-nav-instagram:hover {
-    background-color: var(--white) !important;
-    color: var(--primary-dark) !important;
-}
-
-/* Grupo de botões no Banner */
-.hero-btn-group {
-    display: flex;
-    gap: 15px;
-    justify-content: center;
-    margin-top: 25px;
-    flex-wrap: wrap;
-    position: relative;
-    z-index: 10;
-}
-
-.hero-btn {
-    padding: 14px 28px;
-    font-family: 'Oswald', sans-serif;
-    font-size: 16px;
-    font-weight: 700;
-    text-transform: uppercase;
-    text-decoration: none;
-    border-radius: 5px;
-    transition: var(--transition);
-    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.btn-hero-whatsapp {
-    background-color: var(--whatsapp-green);
-    color: var(--white);
-}
-.btn-hero-whatsapp:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
-}
-
-.btn-hero-instagram {
-    background-color: transparent;
-    color: var(--white);
-    border: 2px solid var(--white);
-}
-.btn-hero-instagram:hover {
-    background-color: var(--white);
-    color: var(--bg-dark);
-    transform: translateY(-3px);
-}
-
-@media (max-width: 768px) {
-    .hero-btn {
-        width: 100%;
-        justify-content: center;
-    }
-}
-/* ==========================================================================
-   ESTILIZAÇÃO DO BLOCO DO QR CODE (BLOCO 08)
-   ========================================================================== */
-.card-qrcode-special {
-    background-color: var(--panel-dark) !important;
-    background-image: none !important; /* Remove a foto genérica antiga */
-}
-
-.qr-layout-flex {
-    display: flex;
-    flex-direction: row;
-    gap: 20px;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.qr-text-side {
-    flex: 1;
-}
-
-.qr-image-side {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background-color: #ffffff;
-    padding: 12px;
-    border-radius: 8px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-    max-width: 160px;
-    margin: 0 auto;
-}
-
-.qr-code-img {
-    width: 100%;
-    height: auto;
-    border-radius: 4px;
-}
-
-.qr-code-hint {
-    font-size: 10px;
-    color: #000000;
-    font-weight: 700;
-    text-transform: uppercase;
-    margin-top: 5px;
-    letter-spacing: 0.5px;
-    font-family: system-ui, sans-serif;
-}
-
-/* Ajuste para telas menores (celular) */
-@media (max-width: 480px) {
-    .qr-layout-flex {
-        flex-direction: column;
-        text-align: center;
-    }
-    .qr-image-side {
-        margin-top: 20px;
-        max-width: 140px;
-    }
-}
-/* Clareia bastante a camada escura, deixando a foto de fundo bem visível */
-.card-insufilm .card-overlay {
-    background: linear-gradient(180deg, rgba(10, 13, 20, 0.4) 0%, rgba(7, 9, 14, 0.6) 100%) !important;
-}
+/* Força TODOS os endereços do rodapé do encarte a alinharem em uma linha só /.card-address {white-space: nowrap !important;text-transform: uppercase !important;text-align: center !important;color: var(--accent-red) !important;font-weight: 600 !important;width: 100% !important;padding-top: 15px !important;border-top: 1px solid rgba(255,255,255,0.05) !important;font-size: 13px !important;letter-spacing: -0.2px !important;flex-shrink: 0 !important;margin-top: auto !important; / Mola invisível que joga o endereço pro rodapé */}/* ==========================================================================BOTÕES E ELEMENTOS FLUTUANTES (VERSÃO FINAL ULTRA-COMPATÍVEL)========================================================================== */.whatsapp-btn {position: fixed !important;bottom: 25px !important;right: 25px !important;background-color: var(--whatsapp-green) !important;width: 60px !important;height: 60px !important;border-radius: 50% !important;display: flex !important;align-items: center !important;justify-content: center !important;box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4) !important;text-decoration: none !important;z-index: 999999 !important;transition: var(--transition) !important;padding: 0 !important;border: none !important;}.whatsapp-btn:hover {transform: scale(1.1) !important;background-color: #1e7e34 !important;}.whatsapp-btn svg.whatsapp-icon-svg {width: 32px !important;height: 32px !important;min-width: 32px !important;min-height: 32px !important;display: block !important;fill: #ffffff !important;margin: 0 !important;}/* ==========================================================================RESPONSIVIDADE E AJUSTES PARA CELULAR========================================================================== */@media (max-width: 768px) {.main-header {flex-direction: column !important;gap: 12px;}.hero-section {background-size: contain;padding-top: 55vw;min-height: auto;background-color: var(--bg-dark);}.hero-title {font-size: 38px;margin-top: 20px;}.hero-subtitle {font-size: 13px;}.hero-btn {width: 100%;justify-content: center;}.catalog-grid {grid-template-columns: 1fr;gap: 20px;padding: 20px 4%;}.card-address {white-space: normal !important; /* No celular permite quebrar linha se a tela for muito estreita */font-size: 11px !important;}.whatsapp-btn {bottom: 20px !important;right: 20px !important;width: 55px !important;height: 55px !important;}.whatsapp-btn svg.whatsapp-icon-svg {width: 28px !important;height: 28px !important;min-width: 28px !important;min-height: 28px !important;}}/* Ajuste fino para telas maiores (Computador) /@media (min-width: 769px) {.main-header {flex-direction: row !important; / Lado a lado no computador */}.header-buttons-container {width: auto;}}
