@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JF Multimarcas | Detalhes do Veículo</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* CORREÇÃO DO TAMANHO DA TELA: Layout responsivo que cabe perfeitamente no PC */
+        body {
+            background-color: #0b0f19;
+            color: #ffffff;
+            font-family: system-ui, -apple-system, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .details-container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+            box-sizing: border-box;
+            width: 100%;
+        }
+
+        @media (min-width: 768px) {
+            .details-container {
+                grid-template-columns: 1.2fr 0.8fr;
+            }
+        }
+
+        .gallery-section {
+            width: 100%;
+            min-width: 0;
+            box-sizing: border-box;
+        }
+
+        /* Ajuste da foto para caber perfeitamente sem esticar e sem sumir no PC */
+        .main-photo-wrapper {
+            width: 100%;
+            height: 400px;
+            background-size: contain;
+            /* Enquadra a foto inteira sem cortar nenhuma parte */
+            background-repeat: no-repeat;
+            background-position: center;
+            border-radius: 8px;
+            border: 1px solid #1e293b;
+            background-color: #111827;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        @media (max-width: 600px) {
+            .main-photo-wrapper {
+                height: 260px;
+            }
+
+            /* Ajuste de altura menor para telas de celulares */
+        }
+
+        .gallery-section {
+            width: 100%;
+        }
+
+        .main-photo-wrapper {
+            width: 100%;
+            height: 450px;
+            background-size: cover;
+            background-position: center;
+            border-radius: 8px;
+            border: 1px solid #1e293b;
+            background-color: #111827;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .thumbnails-grid {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            overflow-x: auto;
+            padding-bottom: 5px;
+        }
+
+        .thumb-item {
+            width: 100px;
+            height: 70px;
+            background-size: cover;
+            background-position: center;
+            border-radius: 4px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: 0.2s;
+            flex-shrink: 0;
+            opacity: 0.6;
+        }
+
+        .thumb-item:hover,
+        .thumb-item.active {
+            border-color: #ff0043;
+            opacity: 1;
+        }
+
+        .info-section {
+            background-color: #111827;
+            border-radius: 8px;
+            padding: 25px;
+            border: 1px solid #1e293b;
+            height: fit-content;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .vehicle-title {
+            font-size: 2rem;
+            font-weight: 800;
+            margin: 0 0 5px 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .vehicle-price {
+            font-size: 2.2rem;
+            font-weight: 900;
+            color: #ff0043;
+            margin-bottom: 25px;
+        }
+
+        .specs-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 30px;
+            border-top: 1px solid #1e293b;
+            padding-top: 20px;
+        }
+
+        .spec-box {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .spec-label {
+            font-size: 0.85rem;
+            color: #718096;
+            text-transform: uppercase;
+            margin-bottom: 2px;
+        }
+
+        .spec-value {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #ffffff;
+        }
+
+        .description-box {
+            border-top: 1px solid #1e293b;
+            padding-top: 20px;
+            margin-bottom: 30px;
+        }
+
+        .description-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #a0aec0;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .description-text {
+            color: #cbd5e1;
+            line-height: 1.6;
+            margin: 0;
+            font-size: 1rem;
+        }
+
+        .btn-proposal {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background-color: #25d366;
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.2rem;
+            padding: 16px;
+            border-radius: 6px;
+            text-align: center;
+            transition: 0.3s;
+            box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
+        }
+
+        .btn-proposal:hover {
+            background-color: #1ebd58;
+            transform: translateY(-2px);
+        }
+
+        .btn-back {
+            display: inline-flex;
+            align-items: center;
+            color: #a0aec0;
+            text-decoration: none;
+            margin-bottom: 20px;
+            font-weight: 600;
+            transition: 0.2s;
+        }
+
+        .btn-back:hover {
+            color: #ff0043;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="main-header">
+        <div class="brand-logo" style="cursor:pointer;" onclick="window.location.href='index.html'">JF
+            <span>MULTIMARCAS</span></div>
+    </header>
+
+    <div class="details-container">
+        <div style="grid-column: 1 / -1; margin-bottom: -10px;">
+            <a href="index.html" class="btn-back">← Voltar ao Catálogo</a>
+        </div>
+
+        <!-- ESQUERDA: GALERIA -->
+        <div class="gallery-section">
+            <div id="foto-principal" class="main-photo-wrapper" style="position: relative;">
+                <button id="seta-esquerda"
+                    style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); background-color: rgba(0,0,0,0.6); color: #ffffff; border: none; font-size: 24px; padding: 10px 15px; border-radius: 4px; cursor: pointer; font-weight: bold; transition: 0.2s; z-index: 10;">&lt;</button>
+                <button id="seta-direita"
+                    style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background-color: rgba(0,0,0,0.6); color: #ffffff; border: none; font-size: 24px; padding: 10px 15px; border-radius: 4px; cursor: pointer; font-weight: bold; transition: 0.2s; z-index: 10;">&gt;</button>
+            </div>
+            <div id="grade-miniaturas" class="thumbnails-grid"></div>
+        </div>
+
+        <!-- DIREITA: FICHA TÉCNICA -->
+        <div class="info-section">
+            <h1 id="carro-titulo" class="vehicle-title">Carregando dados...</h1>
+            <div id="carro-preco" class="vehicle-price">R\$ --</div>
+
+            <div class="specs-grid">
+                <div class="spec-box"><span class="spec-label">Ano Modelo</span><span id="carro-ano"
+                        class="spec-value">--</span></div>
+                <div class="spec-box"><span class="spec-label">Quilometragem</span><span id="carro-km"
+                        class="spec-value">--</span></div>
+                <div class="spec-box"><span class="spec-label">Câmbio</span><span id="carro-cambio"
+                        class="spec-value">--</span></div>
+                <div class="spec-box"><span class="spec-label">Combustível</span><span id="carro-combustivel"
+                        class="spec-value">--</span></div>
+            </div>
+
+            <div class="description-box">
+                <div class="description-title">Opcionais e Observações</div>
+                <p id="carro-condicoes" class="description-text">--</p>
+            </div>
+
+            <a id="carro-botao-w" href="#" target="_blank" class="btn-proposal">💬 Fazer Oferta no WhatsApp</a>
+        </div>
+    </div>
+
+    <!-- CHAMADA OBRIGATÓRIA DA LISTA DE CARROS (PRECISA ESTAR ANTES DO OUTRO SCRIPT) -->
+    <script src="veiculos.js"></script>
+
+        <!-- PROGRAMAÇÃO INTERNA ATUALIZADA COM CARROSSEL E SETAS -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            if (typeof estoqueJF === 'undefined') {
+                document.getElementById('carro-titulo').innerHTML = "<span style='color:red;'>Erro: O arquivo veiculos.js não foi encontrado ou está quebrado!</span>";
+                return;
+            }
+
+            const parametros = new URLSearchParams(window.location.search);
+            const idCarro = parametros.get('carro');
+            const carro = estoqueJF.find(c => c.id === idCarro);
+
+            if (!carro) {
+                document.getElementById('carro-titulo').innerHTML = `<span style='color:red;'>Veículo não encontrado. ID buscado: "${idCarro}"</span>`;
+                return;
+            }
+
+            // Preenche os dados na tela
+            document.getElementById('carro-titulo').innerHTML = `<strong>${carro.marca}</strong> - ${carro.modelo}`;
+            document.getElementById('carro-preco').innerText = `R$ ${carro.preco}`;
+            document.getElementById('carro-ano').innerText = carro.ano;
+            document.getElementById('carro-km').innerText = `${carro.km} KM`;
+            document.getElementById('carro-cambio').innerText = carro.cambio;
+            document.getElementById('carro-combustivel').innerText = carro.combustivel;
+            document.getElementById('carro-condicoes').innerText = carro.condicoes;
+
+            const linkW = `whatsapp://send?phone=5515981188659&text=${encodeURIComponent('Olá Junior! Gostaria de mais detalhes sobre o veículo ' + carro.marca + ' ' + carro.modelo + ' que vi na página de detalhes.')}`;
+            document.getElementById('carro-botao-w').href = linkW;
+
+            const fotoPrincipal = document.getElementById('foto-principal');
+            const gradeMiniaturas = document.getElementById('grade-miniaturas');
+
+            // Listas na memória para gerenciar a ordem das setas
+            let listaFotosValidas = [];
+            let indexFotoAtual = 0;
+
+            // Função para mudar a foto grande de destaque e atualizar a borda vermelha da miniatura ativa
+            function mudarFotoPara(index) {
+                if (listaFotosValidas.length === 0) return;
+                indexFotoAtual = index;
+                
+                fotoPrincipal.style.backgroundImage = `url('${listaFotosValidas[indexFotoAtual]}')`;
+                
+                const thumbs = document.querySelectorAll('.thumb-item');
+                thumbs.forEach((t, i) => {
+                    if (i === indexFotoAtual) {
+                        t.classList.add('active');
+                    } else {
+                        t.classList.remove('active');
+                    }
+                });
+            }
+
+            // Adiciona miniaturas testando se o arquivo realmente existe na pasta estoque
+            function adicionarMiniatura(urlUrl) {
+                const imgTeste = new Image();
+                imgTeste.src = urlUrl;
+
+                imgTeste.onload = () => {
+                    // Evita adicionar a mesma foto duas vezes se o loop achar .jpg e .jpeg iguais
+                    if (listaFotosValidas.includes(urlUrl)) return;
+                    
+                    listaFotosValidas.push(urlUrl);
+                    const meuIndex = listaFotosValidas.length - 1;
+
+                    const thumb = document.createElement('div');
+                    thumb.className = `thumb-item ${meuIndex === 0 ? 'active' : ''}`;
+                    thumb.style.backgroundImage = `url('${urlUrl}')`;
+
+                    thumb.addEventListener('click', () => {
+                        mudarFotoPara(meuIndex);
+                    });
+                    
+                    gradeMiniaturas.appendChild(thumb);
+
+                    // Carrega a primeira imagem de cara no destaque principal
+                    if (meuIndex === 0) {
+                        fotoPrincipal.style.backgroundImage = `url('${urlUrl}')`;
+                    }
+                };
+            }
+
+            // 1. Carrega a foto de capa como primeira imagem
+            adicionarMiniatura(carro.fotoCapa);
+
+            // 2. Varre a pasta procurando de 1 a 15 de forma totalmente automática
+            for (let i = 1; i <= carro.maxFotos; i++) {
+                adicionarMiniatura(`estoque/${carro.prefixoFotos}_${i}.jpeg`);
+                adicionarMiniatura(`estoque/${carro.prefixoFotos}_${i}.jpg`);
+            }
+
+            // 3. COMANDOS DAS SETAS (O que estava faltando e causava o erro!)
+            document.getElementById('seta-esquerda').addEventListener('click', (e) => {
+                e.preventDefault();
+                let novoIndex = indexFotoAtual - 1;
+                if (novoIndex < 0) novoIndex = listaFotosValidas.length - 1;
+                mudarFotoPara(novoIndex);
+            });
+
+            document.getElementById('seta-direita').addEventListener('click', (e) => {
+                e.preventDefault();
+                let novoIndex = indexFotoAtual + 1;
+                if (novoIndex >= listaFotosValidas.length) novoIndex = 0;
+                mudarFotoPara(novoIndex);
+            });
+        });
+    </script>
+</body>
+</html>
+
+    </script>
+</body>
+
+</html>
