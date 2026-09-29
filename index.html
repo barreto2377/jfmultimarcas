@@ -201,6 +201,7 @@
     </section>
 
     <!-- INTEGRALIZAÇÃO SEM ERROS VIA SCRIPT (JSONP) -->
+        <!-- INTEGRALIZAÇÃO CORRIGIDA - FOTOS DO GITHUB E LINK DO DRIVE NO CARD -->
     <script>
         window.retornoPlanilhaJF = function(dados) {
             try {
@@ -210,11 +211,11 @@
                 const linhas = dados.table.rows;
                 
                 if (linhas && linhas.length > 1) { 
-                    container.innerHTML = ''; 
+                    container.innerHTML = ''; // Limpa o card de carregamento
                 }
 
                 linhas.forEach((linha, index) => {
-                    if (index === 0) return; 
+                    if (index === 0) return; // Pula os cabeçalhos
                     if (!linha || !linha.c) return;
 
                     const ler = (n) => {
@@ -235,11 +236,13 @@
 
                     if (!marca && !modelo) return;
 
-                                        // CORREÇÃO 1: Link real da sua pasta de imagens no GitHub Pages
+                    // CORREÇÃO 1: Caminho real da raiz do seu repositório no GitHub Pages
+                    const nomeFotoLimpo = nomeFoto.toLowerCase().trim();
                     const img = nomeFoto ? `https://github.io{nomeFotoLimpo}` : 'https://unsplash.com';
                     
-                    const linkDriveValido = (link_drive && link_drive !== '#') ? link_drive : 'javascript:void(0);';
-                    const targetDrive = (link_drive && link_drive !== '#') ? 'target="_blank"' : '';
+                    // CORREÇÃO 2: Garante que o link do Google Drive seja válido
+                    const linkDriveValido = (link_drive && link_drive !== '#' && link_drive !== '') ? link_drive : 'javascript:void(0);';
+                    const targetDrive = (link_drive && link_drive !== '#' && link_drive !== '') ? 'target="_blank"' : '';
 
                     const linkW = `whatsapp://send?phone=5515981188659&text=${encodeURIComponent('Olá Junior! Gostaria de mais detalhes sobre o veículo ' + marca + ' ' + modelo + ' no valor de R$ ' + preco + ' que vi no catálogo.')}`;
 
@@ -247,6 +250,7 @@
                         <div style="background-color: #ffffff; border-radius: 6px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.12); display: flex; flex-direction: column; position: relative; border: 1px solid #e2e8f0; text-align: left; width: 320px; box-sizing: border-box; font-family: system-ui, sans-serif; margin-bottom: 5px;">
                             <div style="position: absolute; top: 12px; left: -32px; background-color: #ff0043; color: #ffffff; font-size: 10px; font-weight: bold; padding: 5px 35px; transform: rotate(-45deg); z-index: 2; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">DESTAQUE</div>
                             
+                            <!-- O clique na imagem agora abre as fotos do Google Drive em uma nova aba -->
                             <a href="${linkDriveValido}" ${targetDrive} style="display: block; width: 100%; height: 210px; text-decoration: none;">
                                 <div style="width: 100%; height: 100%; background-image: url('${img}'); background-size: cover; background-position: center; background-color: #e2e8f0; cursor: pointer;"></div>
                             </a>
@@ -260,7 +264,7 @@
                                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px 4px; margin-bottom: 20px; font-size: 13px; color: #4a5568; border-top: 1px solid #edf2f7; padding-top: 12px;">
                                     <div>⚙️ Câmbio</div> <div>⏱️ ${km} km</div> <div>📅 ${ano}</div> <div>⛽ Combustível</div>
                                 </div>
-                                a href="${linkW}" target="_blank" style="display: flex; align-items: center; justify-content: center; gap: 8px; background-color: #25d366; color: #ffffff; text-decoration: none; font-weight: bold; padding: 12px; border-radius: 4px; text-align: center; font-size: 16px; margin-top: auto;">Whatsapp 🟢</a>
+                                <a href="${linkW}" target="_blank" style="display: flex; align-items: center; justify-content: center; gap: 8px; background-color: #25d366; color: #ffffff; text-decoration: none; font-weight: bold; padding: 12px; border-radius: 4px; text-align: center; font-size: 16px; margin-top: auto;">Whatsapp 🟢</a>
                             </div>
                         </div>
                     `;
@@ -270,10 +274,10 @@
             }
         };
 
-        // CORREÇÃO 2: ID real com o duplo traço (__) apontando direto para a aba de estoque por JSONP público
         const endpointJSONP = document.createElement('script');
         endpointJSONP.src = "https://google.com";
         document.body.appendChild(endpointJSONP);
     </script>
+
 </body>
 </html>
